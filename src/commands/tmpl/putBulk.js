@@ -37,7 +37,7 @@ export default class tmplPut extends Command {
       const queries = [];
       templates.forEach((tmpl) => {
         queries.push((cb) => {
-          const tmplId = (prefix || '') + tmpl.name.substring(tmpl.name.indexOf('/') + 1).slice(0, 'json.'.length * -1);
+          const tmplId = (prefix || '') + tmpl.name.substring(tmpl.name.indexOf('/') + 1).slice(0, 'json.'.length * -1).replace(/\//g, '#');
           const options = {
             id: tmplId,
             body: tmpl.value

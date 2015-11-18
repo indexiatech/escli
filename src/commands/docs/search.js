@@ -1,4 +1,5 @@
 import Command from '../Command';
+import fs from 'fs';
 
 /**
  * Return documents matching a query, aggregations/facets, highlighted snippets, suggestions, and more.
@@ -19,6 +20,7 @@ export default class docsSearch extends Command {
       { name: 'type', type: [String], required: false, desc: 'The type of the document.' },
       { name: 'q', type: [String], required: false, desc: 'Query in the Lucene query string syntax.' },
       { name: 'query', type: [Object], required: false, desc: 'Query in Elasticsearch Query DSL.' },
+      { name: 'queryFile', type: [String], required: false, desc: 'Query in ES Query DSL via file.'},
       { name: 'size', type: [Number], required: false, desc: 'Number of hits to return (default: 10)' },
       { name: 'compact', type: [Boolean], required: false, desc: 'Display in a compact mode.' },
     ]
@@ -38,12 +40,23 @@ export default class docsSearch extends Command {
     const args = this.getCommandArgs();
     if (!args) return;
 
-    const { query, compact, ...rest } = args;
+    const { query, compact, q, queryFile, ...rest } = args;
 
     if (query) {
       rest.body = {
         query
       }
+    } else if (queryFile) {
+      if (queryFile && !fs.existsSync(queryFile)) {
+        return ui.writeLine(chalk.red(`Couldn't find file [${queryFile}]`));
+      }
+
+      const queryContent = JSON.parse(fs.readFileSync(queryFile, 'utf-8'));
+      rest.body = {
+        query: queryContent
+      }
+    } else {
+      rest.q = q;
     }
 
     ui.startProgress('Getting document')

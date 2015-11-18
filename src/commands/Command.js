@@ -27,6 +27,11 @@ export default class Command {
   getCommandArgs() {
     const { _, $0, v, ...rest} = this.argv;
 
+    if (rest.showHelp) {
+      this.showHelp();
+      return;
+    }
+
     const finalArgs = {};
     try {
       this.options.forEach((opt) => {

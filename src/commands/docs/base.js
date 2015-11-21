@@ -16,6 +16,7 @@ export default class docBase extends Command {
       { name: 'routing', type: [String], desc: 'Specific routing value.' },
       { name: 'body', type: [Object], required: false, desc: 'The document itself.' },
       { name: 'body_file', type: [String], required: false, desc: 'Path to the document file.' },
+      { name: 'body_file_source', type: [Boolean], desc: 'Body doc is wrapped with _source' }
     ]
   }
 
@@ -25,7 +26,7 @@ export default class docBase extends Command {
     const args = this.getCommandArgs();
     if (!args) return;
 
-    const { body, body_file, ...rest } = args;
+    const { body, body_file, body_file_source, ...rest } = args;
 
     if (!body && !body_file) {
       return ui.writeLine(chalk.red(`body / body_file must be set`));
@@ -38,6 +39,9 @@ export default class docBase extends Command {
     let finalBody;
     if (body_file) {
       finalBody = JSON.parse(readFileSync(body_file, 'utf-8'));
+      if (body_file_source) {
+        finalBody = finalBody._source;
+      }
     } else {
       finalBody = body;
     }

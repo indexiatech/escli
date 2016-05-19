@@ -15,7 +15,8 @@ const ui = new UI({
 const ElasticSearch = require('elasticsearch');
 // TODO: Extract to config
 const esc = new ElasticSearch.Client({
-  host: 'http://localhost:9200'
+  host: 'http://localhost:9200',
+  log: 'info'
 });
 
 function spaces(length) {

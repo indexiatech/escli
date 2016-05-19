@@ -1,14 +1,14 @@
 {
-  "name": "esutil",
+  "name": "idx-escli",
   "version": "0.0.1",
-  "description": "",
+  "description": "A handy tool to manage & qyert Elastic Search via CLI.",
   "main": "index.js",
   "bin": {
     "escli": "./bin/escli"
   },
   "author": "Indexia Technologies, ltd.",
-  "license": "PROPRIETARY",
-  "private": true,
+  "license": "BSD-3-Clause",
+  "private": false,
   "dependencies": {
     "async": "^1.5.0",
     "chalk": "^1.1.1",
@@ -17,6 +17,7 @@
     "glob": "^5.0.15",
     "lodash": "^3.10.1",
     "pleasant-progress": "^1.1.0",
+    "rql": "^0.3.3",
     "through": "^2.3.8",
     "yargs": "^3.29.0"
   },

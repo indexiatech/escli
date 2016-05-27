@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "babel": "^5.8.23"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   }
 }
